@@ -25,6 +25,10 @@ public abstract class Configuration {
 		return Double.parseDouble(config.get(key));
 	}
 
+	public static boolean getBoolean(String key){
+		return Boolean.parseBoolean(config.get(key));
+	}
+
 	public static void use(HashMap<String, String> options){
 		options.forEach((String key, String value) -> set(key, value));
 	}

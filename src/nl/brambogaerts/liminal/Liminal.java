@@ -18,6 +18,9 @@ public class Liminal {
 		Configuration.add("threshold", "180");
 		Configuration.add("blurX", "80");
 		Configuration.add("blurY", "10");
+		Configuration.add("luminance", "true");
+		Configuration.add("sort", "true");
+		Configuration.add("blur", "true");
 
 		Configuration.use(
 			CLITool.parseArguments(args)
@@ -29,18 +32,23 @@ public class Liminal {
 			Configuration.get("input")
 		);
 
-		img.transform(
-			new SortTransformer(
-				Configuration.getDouble("threshold")
-			)
-		);
+		if(Configuration.getBoolean("sort")){
+			img.transform(
+				new SortTransformer(
+					Configuration.getDouble("threshold"),
+					Configuration.getBoolean("luminance")
+				)
+			);
+		}
 
-		img.transform(
-			new BlurTransformer(
-				Configuration.getDouble("blurX"),
-				Configuration.getDouble("blurY")
-			)
-		);
+		if(Configuration.getBoolean("blur")){
+			img.transform(
+				new BlurTransformer(
+					Configuration.getDouble("blurX"),
+					Configuration.getDouble("blurY")
+				)
+			);
+		}
 
 		img.save(
 			Configuration.get("output")
